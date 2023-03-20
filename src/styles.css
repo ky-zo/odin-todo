@@ -1,0 +1,9 @@
+.content {
+    display: flex;
+    gap: 50px;
+}
+
+.sub-container {
+    display: flex;
+    flex-direction: column;
+}
