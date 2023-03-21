@@ -8,22 +8,28 @@
     </head>
     <body>
         <div class="content">
-            <div class="sub-container">
-                <form class="new-project">
-                    <input type="text" name="projectName" id="projectName" />
-                    <button type="submit">Add New Project</button>
-                </form>
+            <div class="sidebar">
+                <div><h3>Your lists</h3></div>
                 <div class="projects"></div>
+                <form class="new-project">
+                    <input type="text" name="projectName" id="projectName" placeholder="New list..." />
+                    <button type="submit">+</button>
+                </form>
             </div>
             <div class="sub-container">
+                <!-- <button id="allTasks">All Tasks</button> -->
+                <div class="header"><h1>Your Tasks</h1></div>
+                <div class="sub-header"><p>This is the list of your tasks. Make it simple. Make it doable.</p></div>
+
+                <div class="tasks"></div>
                 <form class="new-task">
                     <input type="text" name="taskTitle" id="taskTile" value="Title" />
                     <input type="text" name="taskDesc" id="taskDesc" value="Description" />
                     <input type="text" name="taskDDL" id="taskDDL" value="Deadline" />
                     <input type="text" name="taskPrio" id="taskPrio" value="Priority" />
+                    <input type="number" name="taskProject" id="taskProject" value="0" />
                     <button type="submit">Add New Task</button>
                 </form>
-                <div class="tasks"></div>
             </div>
         </div>
     </body>

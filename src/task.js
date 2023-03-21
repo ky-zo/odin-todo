@@ -1,13 +1,13 @@
 export default class Task {
-    constructor(taskId, title, desc, deadline, priority, project = 0, status = false, bin = false) {
+    constructor(taskId, title, description, deadline, priority, project = 0, status = false, deleted = false) {
         this.taskId = taskId
         this.title = title
-        this.desc = desc
+        this.description = description
         this.deadline = deadline
         this.priority = priority
-        this.project = project
+        this.project === null ? (this.project = 0) : (this.project = project)
         this.status = status
-        this.bin = bin
+        this.deleted = deleted
     }
 
     changeProject(newProject) {
@@ -15,7 +15,7 @@ export default class Task {
     }
 
     changeStatus() {
-        this.status === false ? (this.status = true) : (this.status = false)
+        this.status = !this.status
     }
 
     changeTitle(newTitle) {
@@ -23,7 +23,7 @@ export default class Task {
     }
 
     changeDesc(newDesc) {
-        this.desc = newDesc
+        this.description = newDesc
     }
 
     changeDeadline(newDeadline) {
@@ -35,14 +35,19 @@ export default class Task {
     }
 
     delete() {
-        this.bin = true
+        this.delete = true
     }
 }
 
 const tasks = []
 
-function newTask(title, desc, deadline, priority, project = 0, status = false, bin = false) {
-    tasks.push(new Task(tasks.length, title, desc, deadline, priority, project, status, bin))
+function newTask(title, description, deadline, priority, project = 0, status = false, deleted = false) {
+    tasks.push(new Task(tasks.length, title, description, deadline, priority, project, status, deleted))
+    return tasks
 }
 
-export { tasks, newTask }
+function filterTasks(selectedProjectFilter) {
+    return tasks.filter((task) => task.project === selectedProjectFilter)
+}
+
+export { tasks, newTask, filterTasks }

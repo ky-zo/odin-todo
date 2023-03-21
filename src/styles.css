@@ -1,9 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    /* border: 0.5px solid darkslategrey; */
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
 .content {
-    display: flex;
+    display: grid;
+    grid-template-columns: 20% 1fr;
     gap: 50px;
+}
+
+.sidebar {
+    background-color: #f4f5f7;
+    padding: 20px;
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 100dvh;
+}
+
+.project-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: transparent 1.5px solid;
+}
+
+.project-item:hover {
+    border-bottom: #c1c1c1 1px solid;
+}
+
+.new-project {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    border-bottom: transparent 1.5px solid;
+}
+
+.new-project > button {
+    justify-self: end;
+}
+
+.sidebar button {
+    border: none;
+    background-color: transparent;
+    transition: 100ms;
+}
+
+.sidebar input {
+    border: none;
+    border-bottom: #c1c1c1 1px solid;
+    height: 1.5rem;
+}
+
+.sidebar button:hover {
+    color: #a379ce;
+    font-weight: 900;
+    transition: 100ms;
 }
 
 .sub-container {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+}
+
+.projects {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* max-width: 150px; */
+    gap: 10px;
+}
+
+.task-item {
+    display: flex;
+    min-width: 100%;
+    gap: 20px;
+}
+
+.task-table {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-columns: 1fr;
+    row-gap: 3px;
+}
+
+.task-description {
+    grid-column: span 4;
+    font-size: 0.7rem;
+    font-weight: 300;
+    max-width: 50%;
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+#TaskStatus {
+    transform: scale(1.3);
+}
+
+.project-pick {
+    flex: 1;
+    justify-self: start;
+    height: 2rem;
+}
+
+.header {
+    padding-top: 40px;
+}
+
+.sub-header {
+    padding-bottom: 30px;
+}
+
+.task-deadline {
+    display: flex;
+}
+
+.task-date {
+    border: 0.5px #c1c1c1 solid;
+    background-color: #f4f5f7;
+    font-size: 0.6rem;
+    border-radius: 20px;
+    padding: 3px;
+    font-weight: 400;
 }

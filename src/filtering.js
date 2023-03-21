@@ -1,9 +1,9 @@
-function filterBin(allItems) {
-    return allItems.filter((element) => !element.bin)
+function filterDeleted(allItems) {
+    return allItems.filter((element) => !element.deleted)
 }
 
 function filterByProject(allItems, projectId) {
     return allItems.filter((element) => element.project === projectId)
 }
 
-export { filterBin, filterByProject }
+export { filterDeleted, filterByProject }
