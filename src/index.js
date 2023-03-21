@@ -4,9 +4,6 @@ import { projects, newProject } from './project'
 import { getNewTask, updateProjects, updateTasks } from './dom.js'
 import { filterDeleted, filterByProject } from './filtering.js'
 
-let tempProjects = []
-let tempTasks = []
-
 newTask('Do Laundry', 'Wash and dry towels', '03/22/2023', '3', 1)
 newTask('Do some Work', 'Send follow-up email to client', '03/23/2023', '2', 1)
 newTask('Iron', 'Iron dress shirts', '03/24/2023', '4')
@@ -30,13 +27,9 @@ newProject('Work')
 newProject('School')
 newProject('Home')
 newProject('Errands')
+tasks[1].delete()
 
-tempProjects = filterDeleted(projects)
-updateProjects(tempProjects)
+updateProjects(filterDeleted(projects))
+updateTasks(tasks)
 
-tempTasks = filterDeleted(tasks)
-updateTasks(tempTasks)
-
-// tasks[1].delete()
-
-export { tasks, tempProjects, tempTasks }
+export { tasks }

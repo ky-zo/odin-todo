@@ -35,7 +35,7 @@ export default class Task {
     }
 
     delete() {
-        this.delete = true
+        this.deleted = true
     }
 }
 

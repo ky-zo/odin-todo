@@ -1,6 +1,6 @@
 import { projects, newProject } from './project'
 import { tasks, filterTasks, newTask } from './task'
-import { filterDeleted } from './filtering'
+import { filterDeleted, filterCompleted, filterIncomplete, filterOnlyDeleted } from './filtering'
 
 let currentFilter = null
 
@@ -47,6 +47,7 @@ function updateProjects(projectsArray) {
             currentFilter = projectsArray[i].projectId
             console.log(currentFilter)
             updateTasks(filterTasks(currentFilter))
+            document.querySelector('#header-content').innerText = `🚀 ${projectsArray[i].name} Tasks`
         })
 
         projectItem.appendChild(singularProject)
@@ -75,6 +76,8 @@ function updateTasks(tasksArray) {
         singularTask.textContent = `Title: ${tasksArray[i].title} | Project: "${tasksArray[i].project}" |  Desc: ${tasksArray[i].description} | DDL: ${tasksArray[i].deadline} | Prio: ${tasksArray[i].priority}`
 
         taskItem.appendChild(createTaskItemDivs(i, tasksArray))
+        taskItem.appendChild(createTaskDeleteButton(i, tasksArray))
+
         taskList.appendChild(taskItem)
     }
 }
@@ -93,6 +96,22 @@ function createTaskCompleteCheckbox(i, tasksArray) {
     return statusCheckbox
 }
 
+function createTaskDeleteButton(i, tasksArray) {
+    const deleteButton = document.createElement('button')
+    deleteButton.type = 'button'
+    deleteButton.innerHTML = '&times;'
+    deleteButton.id = 'TaskDelete'
+    deleteButton.name = 'TaskDelete'
+    deleteButton.checked = tasks[tasksArray[i].taskId].status
+    deleteButton.addEventListener('click', (event) => {
+        event.preventDefault()
+        tasks[tasksArray[i].taskId].delete()
+        console.log(`${tasks[tasksArray[i].taskId]}deleted`)
+        updateTasks(filterDeleted(tasksArray))
+    })
+    return deleteButton
+}
+
 function createTaskItemDivs(i, tasksArray) {
     const taskTable = document.createElement('div')
     taskTable.classList.add('task-table')
@@ -101,26 +120,70 @@ function createTaskItemDivs(i, tasksArray) {
     taskTitle.classList.add('task-title')
     taskTitle.innerText = tasksArray[i].title
 
-    const taskDeadline = document.createElement('div')
+    const taskProperties = document.createElement('div')
     const date = document.createElement('div')
-    taskDeadline.classList.add('task-deadline')
+    taskProperties.classList.add('task-properties')
     date.classList.add('task-date')
     date.innerText = tasksArray[i].deadline
-    taskDeadline.appendChild(date)
+    taskProperties.appendChild(date)
 
     const taskPriority = document.createElement('div')
-    taskPriority.innerText = tasksArray[i].priority
+    taskPriority.classList.add('task-priority')
+    taskPriority.innerText = convertTasksPriority(tasksArray[i].priority)
+    if (taskPriority.innerText !== '') {
+        taskProperties.appendChild(taskPriority)
+    }
 
     const taskDescription = document.createElement('div')
     taskDescription.classList.add('task-description')
     taskDescription.innerText = tasksArray[i].description
 
     taskTable.appendChild(taskTitle)
-    taskTable.appendChild(taskDeadline)
-    taskTable.appendChild(taskPriority)
+    taskTable.appendChild(taskProperties)
     taskTable.appendChild(taskDescription)
 
     return taskTable
 }
+
+;(function showAllTasks() {
+    const allTasksButton = document.querySelector('#all-tasks')
+    allTasksButton.addEventListener('click', (e) => {
+        updateTasks(filterIncomplete(tasks))
+        document.querySelector('#header-content').innerText = '📬 All Tasks'
+    })
+})()
+;(function showCompleted() {
+    const completedTasksButton = document.querySelector('#completed-tasks')
+    completedTasksButton.addEventListener('click', (e) => {
+        updateTasks(filterCompleted(tasks))
+        document.querySelector('#header-content').innerText = '✅ Completed Tasks'
+    })
+})()
+;(function showDeleted() {
+    const deletedTasksButton = document.querySelector('#deleted-tasks')
+    deletedTasksButton.addEventListener('click', (e) => {
+        updateTasks(filterOnlyDeleted(tasks))
+        document.querySelector('#header-content').innerText = '🗑️ Deleted Tasks'
+    })
+})()
+
+function convertTasksPriority(priorityNumber) {
+    switch (priorityNumber) {
+        case '5':
+            return '🔥 Ultra'
+        case '4':
+            return '🔴 High'
+        case '3':
+            return '🟠 Medium'
+        case '2':
+            return '🟡 Low'
+        case '1':
+            return '🟢 Someday'
+        default:
+            return null
+    }
+}
+
+console.log(convertTasksPriority(2))
 
 export { updateProjects, updateTasks }

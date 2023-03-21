@@ -83,15 +83,16 @@
 }
 
 .task-table {
+    /* flex-grow: 1; */
     display: grid;
-    width: 100%;
-    grid-template-columns: 1fr 1fr 1fr;
+    width: 30vw;
+    grid-template-columns: 200px 300px;
     grid-auto-columns: 1fr;
     row-gap: 3px;
 }
 
 .task-description {
-    grid-column: span 4;
+    grid-column: span 2;
     font-size: 0.7rem;
     font-weight: 300;
     max-width: 50%;
@@ -105,6 +106,12 @@
 
 #TaskStatus {
     transform: scale(1.3);
+    transition: 100ms;
+}
+
+#TaskStatus:hover {
+    transform: scale(2);
+    transition: 100ms;
 }
 
 .project-pick {
@@ -121,8 +128,9 @@
     padding-bottom: 30px;
 }
 
-.task-deadline {
+.task-properties {
     display: flex;
+    gap: 10px;
 }
 
 .task-date {
@@ -132,4 +140,26 @@
     border-radius: 20px;
     padding: 3px;
     font-weight: 400;
+}
+
+.task-priority {
+    border: 0.5px #c1c1c1 solid;
+    background-color: #f4f5f7;
+    font-size: 0.6rem;
+    border-radius: 20px;
+    padding: 3px;
+    font-weight: 400;
+}
+
+#TaskDelete {
+    border: none;
+    font-size: 1.2rem;
+    background-color: transparent;
+    transition: 100ms;
+}
+
+#TaskDelete:hover {
+    color: red;
+    scale: 2;
+    transition: 100ms;
 }
