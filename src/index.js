@@ -3,6 +3,7 @@ import { tasks, newTask } from './task'
 import { projects, newProject } from './project'
 import { getNewTask, updateProjects, updateTasks } from './dom.js'
 import { filterDeleted, filterByProject } from './filtering.js'
+import { storageAvailable } from './local.js'
 
 newTask('Do Laundry', 'Wash and dry towels', '03/22/2023', '3', 1)
 newTask('Do some Work', 'Send follow-up email to client', '03/23/2023', '2', 1)
@@ -27,7 +28,6 @@ newProject('Work')
 newProject('School')
 newProject('Home')
 newProject('Errands')
-tasks[1].delete()
 
 updateProjects(filterDeleted(projects))
 updateTasks(tasks)

@@ -12,13 +12,13 @@
                 <div><h3>Filters</h3></div>
                 <button id="all-tasks">All Tasks</button>
                 <button id="completed-tasks">Completed</button>
-                <button id="deleted-tasks">Deleted</button>
+                <!-- <button id="deleted-tasks">Deleted</button> -->
                 <button id="scheduled-tasks">Scheduled</button>
                 <div>
                     <div><h3>Your lists</h3></div>
                     <div class="projects"></div>
                     <form class="new-project">
-                        <input type="text" name="projectName" id="projectName" placeholder="New list..." />
+                        <input class="project-pick" type="text" name="projectName" id="projectName" placeholder="New list..." />
                         <button type="submit">+</button>
                     </form>
                 </div>
@@ -32,9 +32,15 @@
                 <form class="new-task">
                     <input type="text" name="taskTitle" id="taskTile" value="Title" />
                     <input type="text" name="taskDesc" id="taskDesc" value="Description" />
-                    <input type="text" name="taskDDL" id="taskDDL" value="Deadline" />
-                    <input type="text" name="taskPrio" id="taskPrio" value="Priority" />
-                    <input type="number" name="taskProject" id="taskProject" value="0" />
+                    <input type="date" name="taskDDL" id="taskDDL" value="Deadline" />
+                    <select type="text" name="taskPrio" id="taskPrio" value="Priority">
+                        <option value="5">🔥 Ultra</option>
+                        <option value="4">🔴 High</option>
+                        <option value="3">🟠 Medium</option>
+                        <option value="2">🟡 Low</option>
+                        <option value="1">🟢 Someday</option>
+                    </select>
+                    <input type="hidden" name="taskProject" id="taskProject" value="0" />
                     <button type="submit">Add New Task</button>
                 </form>
             </div>

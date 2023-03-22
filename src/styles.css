@@ -19,7 +19,7 @@
     padding-top: 40px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 10px; */
     min-height: 100dvh;
 }
 
@@ -56,6 +56,11 @@
     height: 1.5rem;
 }
 
+#projectName {
+    background-color: transparent;
+    height: 2re;
+}
+
 .sidebar button:hover {
     color: #a379ce;
     font-weight: 900;
@@ -73,7 +78,7 @@
     flex-direction: column;
     justify-content: center;
     /* max-width: 150px; */
-    gap: 10px;
+    /* gap: 10px; */
 }
 
 .task-item {
@@ -107,6 +112,7 @@
 #TaskStatus {
     transform: scale(1.3);
     transition: 100ms;
+    align-self: flex-start;
 }
 
 #TaskStatus:hover {
@@ -155,6 +161,7 @@
     border: none;
     font-size: 1.2rem;
     background-color: transparent;
+    align-self: flex-start;
     transition: 100ms;
 }
 
@@ -162,4 +169,29 @@
     color: red;
     scale: 2;
     transition: 100ms;
+    align-self: flex-start;
+}
+
+.sidebar > button {
+    height: 2rem;
+}
+
+.task-item {
+    position: relative;
+}
+
+.task-item .task-description {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    background-color: white; /* Change this to match your task item background color */
+    padding: 5px;
+    z-index: 1;
+    transition: 200ms;
+}
+
+.task-item:hover .task-description {
+    opacity: 1;
+    max-height: 200px; /* Adjust this value based on the maximum expected height of the description */
+    transition: opacity 200ms, max-height 200ms;
 }

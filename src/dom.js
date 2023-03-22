@@ -8,7 +8,10 @@ let currentFilter = null
     const form = document.querySelector('.new-project')
     form.addEventListener('submit', (event) => {
         event.preventDefault()
-        updateProjects(filterDeleted(newProject(form.elements[0].value)))
+        const newProjectsArray = newProject(form.elements[0].value)
+        updateProjects(filterDeleted(newProjectsArray))
+        localStorage.setItem('projects', newProjectsArray)
+        console.log(localStorage.getItem('projects'))
     })
 })()
 ;(function getNewTask() {
@@ -23,12 +26,13 @@ let currentFilter = null
         const project = parseFloat(form.elements[4].value)
 
         const updatedTaskArray = newTask(title, description, deadline, priority, project)
+        localStorage.setItem('tesks', updatedTaskArray)
 
         if (typeof currentFilter === 'number') {
             const filteredTasks = filterTasks(currentFilter)
-            updateTasks(filteredTasks)
+            updateTasks(filterDeleted(filteredTasks))
         } else {
-            updateTasks(updatedTaskArray)
+            updateTasks(filterDeleted(updatedTaskArray))
         }
     })
 })()
@@ -46,8 +50,9 @@ function updateProjects(projectsArray) {
         singularProject.addEventListener('click', (event) => {
             currentFilter = projectsArray[i].projectId
             console.log(currentFilter)
-            updateTasks(filterTasks(currentFilter))
+            updateTasks(filterDeleted(filterIncomplete(filterTasks(currentFilter))))
             document.querySelector('#header-content').innerText = `🚀 ${projectsArray[i].name} Tasks`
+            document.querySelector('#taskProject').value = projectsArray[i].projectId
         })
 
         projectItem.appendChild(singularProject)
@@ -57,6 +62,8 @@ function updateProjects(projectsArray) {
         singularProjectDelete.addEventListener('click', (event) => {
             projects[projectsArray[i].projectId].delete()
             updateProjects(filterDeleted(projects))
+            localStorage.setItem('projects', projects)
+            console.log(localStorage.getItem('projects'))
         })
         projectItem.appendChild(singularProjectDelete)
         projectList.appendChild(projectItem)
@@ -91,7 +98,7 @@ function createTaskCompleteCheckbox(i, tasksArray) {
     statusCheckbox.addEventListener('change', (event) => {
         event.preventDefault()
         tasks[tasksArray[i].taskId].changeStatus()
-        updateTasks(tasksArray)
+        updateTasks(filterDeleted(tasksArray))
     })
     return statusCheckbox
 }
@@ -125,7 +132,9 @@ function createTaskItemDivs(i, tasksArray) {
     taskProperties.classList.add('task-properties')
     date.classList.add('task-date')
     date.innerText = tasksArray[i].deadline
-    taskProperties.appendChild(date)
+    if (date.innerText !== '') {
+        taskProperties.appendChild(date)
+    }
 
     const taskPriority = document.createElement('div')
     taskPriority.classList.add('task-priority')
@@ -145,27 +154,39 @@ function createTaskItemDivs(i, tasksArray) {
     return taskTable
 }
 
+// function showDescriptionOnHover() {
+//     const
+// }
+
 ;(function showAllTasks() {
     const allTasksButton = document.querySelector('#all-tasks')
     allTasksButton.addEventListener('click', (e) => {
-        updateTasks(filterIncomplete(tasks))
+        updateTasks(filterDeleted(tasks))
         document.querySelector('#header-content').innerText = '📬 All Tasks'
     })
 })()
 ;(function showCompleted() {
     const completedTasksButton = document.querySelector('#completed-tasks')
     completedTasksButton.addEventListener('click', (e) => {
-        updateTasks(filterCompleted(tasks))
+        updateTasks(filterCompleted(filterDeleted(tasks)))
         document.querySelector('#header-content').innerText = '✅ Completed Tasks'
     })
 })()
-;(function showDeleted() {
-    const deletedTasksButton = document.querySelector('#deleted-tasks')
-    deletedTasksButton.addEventListener('click', (e) => {
-        updateTasks(filterOnlyDeleted(tasks))
-        document.querySelector('#header-content').innerText = '🗑️ Deleted Tasks'
+;(function showIncomplete() {
+    const scheduledTasksButton = document.querySelector('#scheduled-tasks')
+    scheduledTasksButton.addEventListener('click', (e) => {
+        updateTasks(filterIncomplete(filterDeleted(tasks)))
+        document.querySelector('#header-content').innerText = '📆 Scheduled Tasks'
     })
 })()
+
+// ;(function showDeleted() {
+//     const deletedTasksButton = document.querySelector('#deleted-tasks')
+//     deletedTasksButton.addEventListener('click', (e) => {
+//         updateTasks(filterOnlyDeleted(tasks))
+//         document.querySelector('#header-content').innerText = '🗑️ Deleted Tasks'
+//     })
+// })()
 
 function convertTasksPriority(priorityNumber) {
     switch (priorityNumber) {
